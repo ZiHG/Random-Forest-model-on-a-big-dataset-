@@ -1,0 +1,232 @@
+data = read.csv("ProjectTrainingData.csv", header = T)
+
+#handle categorical variables
+sapply(data,FUN=class)
+
+data$C1 = as.factor(data$C1)
+data$banner_pos = as.factor(data$banner_pos)
+data$device_type = as.factor(data$device_type)
+data$device_conn_type = as.factor(data$device_conn_type)
+data$C14 = as.factor(data$C14)
+data$C15 = as.factor(data$C15)
+data$C16 = as.factor(data$C16)
+data$C17 = as.factor(data$C17)
+data$C18 = as.factor(data$C18)
+data$C19 = as.factor(data$C19)
+data$C20 = as.factor(data$C20)
+data$C21 = as.factor(data$C21)
+
+fn <- function(x) {
+  if(is.factor(x)) {
+    return(length(levels(x)))
+  } else {
+    return(NA)
+  }
+}
+
+sapply(data,FUN=fn)
+
+#combine levels by the frequency distribution
+library(plyr)
+
+freq_C1 = as.data.frame(count(data, "C1"))
+freq_C1 = freq_C1[which(freq_C1$freq > 31991090*0.05),]
+#sum(freq_C1$freq)/nrow(data)
+#[1] 0.9721758
+#2 levels
+
+freq_banner_pos = as.data.frame(count(data, "banner_pos"))
+freq_banner_pos = freq_banner_pos[which(freq_banner_pos$freq > 31991090*0.05),]
+#sum(freq_banner_pos$freq)/nrow(data)
+#[1] 0.9981691
+#2 levels
+
+freq_site_id = as.data.frame(count(data, "site_id"))
+freq_site_id = freq_site_id[which(freq_site_id$freq > 31991090*0.004),]
+#sum(freq_site_id$freq)/nrow(data)
+#[1] 0.8101816
+#29 levels
+
+freq_site_domain = as.data.frame(count(data, "site_domain"))
+freq_site_domain = freq_site_domain[which(freq_site_domain$freq > 31991090*0.005),]
+#sum(freq_site_domain$freq)/nrow(data)
+#[1] 0.8311889
+#24 levels
+
+freq_site_category = as.data.frame(count(data, "site_category"))
+freq_site_category = freq_site_category[which(freq_site_category$freq > 31991090*0.05),]
+#sum(freq_app_category$freq)/nrow(data)
+#[1] 0.8936601
+#4 levels
+
+freq_app_id = as.data.frame(count(data, "app_id"))
+freq_app_id = freq_app_id[which(freq_app_id$freq > 31991090*0.006),]
+#sum(freq_app_id$freq)/nrow(data)
+#[1] 0.819965
+#12 levels
+
+freq_app_domain = as.data.frame(count(data, "app_domain"))
+freq_app_domain = freq_app_domain[which(freq_app_domain$freq > 31991090*0.05),]
+#sum(freq_app_domain$freq)/nrow(data)
+#[1] 0.8546757
+#3 levels
+
+freq_app_category = as.data.frame(count(data, "app_category"))
+freq_app_category = freq_app_category[which(freq_app_category$freq > 31991090*0.05),]
+#sum(freq_app_category$freq)/nrow(data)
+#[1] 0.8936601
+#2 levels
+
+freq_device_id = as.data.frame(count(data, "device_id"))
+freq_device_id = freq_device_id[which(freq_device_id$freq > 31991090*0.05),]
+#sum(freq_device_id$freq)/nrow(data)
+#[1] 0.8226523
+#1 level
+
+freq_device_ip = as.data.frame(count(data, "device_ip"))
+freq_device_ip = freq_device_ip[which(freq_device_ip$freq > 31991090*0.00005),]
+#sum(freq_device_ip$freq)/nrow(data)
+#[1] 0.116296
+#512 levels
+
+freq_device_model = as.data.frame(count(data, "device_model"))
+freq_device_model = freq_device_model[which(freq_device_model$freq > 31991090*0.001),]
+#sum(freq_device_model$freq)/nrow(data)
+#[1] 0.7101701
+#154 levels
+
+freq_device_type = as.data.frame(count(data, "device_type"))
+freq_device_type = freq_device_type[which(freq_device_type$freq > 31991090*0.05),]
+#sum(freq_device_type$freq)/nrow(data)
+#[1] 0.9763454
+#2 levels
+
+freq_device_conn_type = as.data.frame(count(data, "device_conn_type"))
+freq_device_conn_type = freq_device_conn_type[which(freq_device_conn_type$freq > 31991090*0.05),]
+#sum(freq_device_conn_type$freq)/nrow(data)
+#[1] 0.9988871
+#3 levels
+
+freq_C14 = as.data.frame(count(data, "C14"))
+freq_C14 = freq_C14[which(freq_C14$freq > 31991090*0.002),]
+#sum(freq_C14$freq)/nrow(data)
+#[1] 0.665029
+#104 levels
+
+freq_C15 = as.data.frame(count(data, "C15"))
+freq_C15 = freq_C15[which(freq_C15$freq > 31991090*0.05),]
+#sum(freq_C15$freq)/nrow(data)
+#[1] 0.989888
+#2 levels
+
+freq_C16 = as.data.frame(count(data, "C16"))
+freq_C16 = freq_C16[which(freq_C16$freq > 31991090*0.05),]
+#sum(freq_C16$freq)/nrow(data)
+#[1] 0.9424757
+#1 level
+
+freq_C17 = as.data.frame(count(data, "C17"))
+freq_C17 = freq_C17[which(freq_C17$freq > 31991090*0.003),]
+#sum(freq_C17$freq)/nrow(data)
+#[1] 0.8029463
+#72 levels
+
+freq_C18 = as.data.frame(count(data, "C18"))
+freq_C18 = freq_C18[which(freq_C18$freq > 31991090*0.01),]
+#sum(freq_C18$freq)/nrow(data)
+#[1] 1
+#4 levels
+
+freq_C19 = as.data.frame(count(data, "C19"))
+freq_C19 = freq_C19[which(freq_C19$freq > 31991090*0.01),]
+#sum(freq_C19$freq)/nrow(data)
+#[1] 0.8702915
+#14 levels
+
+freq_C20 = as.data.frame(count(data, "C20"))
+freq_C20 = freq_C20[which(freq_C20$freq > 31991090*0.012),]
+#sum(freq_C20$freq)/nrow(data)
+#[1] 0.8549582
+#14 levels
+
+freq_C21 = as.data.frame(count(data, "C21"))
+freq_C21 = freq_C21[which(freq_C21$freq > 31991090*0.02),]
+#sum(freq_C21$freq)/nrow(data)
+#[1] 0.833299
+#12 levels
+
+data$C1 = as.character(data$C1)
+data$banner_pos = as.character(data$banner_pos)
+data$site_id = as.character(data$site_id)
+data$site_domain = as.character(data$site_domain)
+data$site_category = as.character(data$site_category)
+data$app_id = as.character(data$app_id)
+data$app_domain = as.character(data$app_domain)
+data$app_category = as.character(data$app_category)
+data$device_id = as.character(data$device_id)
+data$device_type = as.character(data$device_type)
+data$device_conn_type = as.character(data$device_conn_type)
+#data1$C14 = as.character(data1$C14)
+data$C15 = as.character(data$C15)
+data$C16 = as.character(data$C16)
+data$C17 = as.character(data$C17)
+data$C18 = as.character(data$C18)
+data$C19 = as.character(data$C19)
+data$C20 = as.character(data$C20)
+data$C21 = as.character(data$C21)
+
+data$C1 = ifelse(data$C1 %in% freq_C1$C1, data$C1, "other")
+data$banner_pos = ifelse(data$banner_pos %in% freq_banner_pos$banner_pos, data$banner_pos, "other")
+data$site_id = ifelse(data$site_id %in% freq_site_id$site_id, data$site_id, "other")
+data$site_domain = ifelse(data$site_domain %in% freq_site_domain$site_domain, data$site_domain, "other")
+data$site_category = ifelse(data$site_category %in% freq_site_category$site_category, data$site_category, "other")
+data$app_id = ifelse(data$app_id %in% freq_app_id$app_id, data$app_id, "other")
+data$app_domain = ifelse(data$app_domain %in% freq_app_domain$app_domain, data$app_domain, "other")
+data$app_category = ifelse(data$app_category %in% freq_app_category$app_category, data$app_category, "other")
+data$device_id = ifelse(data$device_id %in% freq_device_id$device_id, data$device_id, "other")
+data$device_type = ifelse(data$device_type %in% freq_device_type$device_type, data$device_type, "other")
+data$device_conn_type = ifelse(data$device_conn_type %in% freq_device_conn_type$device_conn_type, data$device_conn_type, "other")
+data$C15 = ifelse(data$C15 %in% freq_C15$C15, data$C15, "other")
+data$C16 = ifelse(data$C16 %in% freq_C16$C16, data$C16, "other")
+data$C17 = ifelse(data$C17 %in% freq_C17$C17, data$C17, "other")
+data$C18 = ifelse(data$C18 %in% freq_C18$C18, data$C18, "other")
+data$C19 = ifelse(data$C19 %in% freq_C19$C19, data$C19, "other")
+data$C20 = ifelse(data$C20 %in% freq_C20$C20, data$C20, "other")
+data$C21 = ifelse(data$C21 %in% freq_C21$C21, data$C21, "other")
+data$id = NULL
+data$device_ip = NULL
+data$device_model = NULL
+data$C14 = NULL
+
+sapply(data,FUN=class)
+
+data$C1 = as.factor(data$C1)
+data$banner_pos = as.factor(data$banner_pos)
+data$site_id = as.factor(data$site_id)
+data$site_domain = as.factor(data$site_domain)
+data$site_category = as.factor(data$site_category)
+data$app_id = as.factor(data$app_id)
+data$app_domain = as.factor(data$app_domain)
+data$app_category = as.factor(data$app_category)
+data$device_id = as.factor(data$device_id)
+data$device_type = as.factor(data$device_type)
+data$device_conn_type = as.factor(data$device_conn_type)
+data$C15 = as.factor(data$C15)
+data$C16 = as.factor(data$C16)
+data$C17 = as.factor(data$C17)
+data$C18 = as.factor(data$C18)
+data$C19 = as.factor(data$C19)
+data$C20 = as.factor(data$C20)
+data$C21 = as.factor(data$C21)
+
+fn <- function(x) {
+  if(is.factor(x)) {
+    return(length(levels(x)))
+  } else {
+    return(NA)
+  }
+}
+
+#check categorical variables' levels
+sapply(data,FUN=fn)
+
